@@ -28,7 +28,7 @@ _cfg = _load_config()
 
 NO_BAN_KICK_ID = _cfg.get("no_ban_kick_ids", [])
 
-DISCORD_URL = _cfg.get("discord_url", "https://discord.gg/e8BrVmVTRu")
+DISCORD_URL = _cfg.get("discord_url", "https://discord.gg/w7TvFudgxm")
 GITHUB_URL  = _cfg.get("github_url", "https://github.com/M-Societyy")
 RAID_NAME   = _cfg.get("raid_name", "raid-by-ms")
 TOOL_NAME   = _cfg.get("tool_name", "MS-NUKER")
