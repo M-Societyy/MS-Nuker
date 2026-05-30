@@ -19,7 +19,7 @@
 </p>
 
 <p align="center">
-  <a href="https://discord.gg/e8BrVmVTRu"><img src="https://img.shields.io/badge/Discord-Server-5865F2?style=for-the-badge&logo=discord&logoColor=white"/></a>
+  <a href="https://discord.gg/w7TvFudgxm"><img src="https://img.shields.io/badge/Discord-Server-5865F2?style=for-the-badge&logo=discord&logoColor=white"/></a>
   <a href="https://github.com/M-Societyy"><img src="https://img.shields.io/badge/GitHub-M--Society-181717?style=for-the-badge&logo=github&logoColor=white"/></a>
   <a href="https://www.youtube.com/@m-societyoff"><img src="https://img.shields.io/badge/YouTube-Canal-FF0000?style=for-the-badge&logo=youtube&logoColor=white"/></a>
 </p>
@@ -383,7 +383,7 @@ El archivo `config.json` permite modificar el comportamiento de la herramienta s
 ```json
 {
     "tool_name": "MS-NUKER",
-    "discord_url": "https://discord.gg/e8BrVmVTRu",
+    "discord_url": "https://discord.gg/w7TvFudgxm",
     "github_url": "https://github.com/M-Societyy",
     "raid_name": "raid-by-ms",
     "gif_banner": "URL del GIF banner",
@@ -395,11 +395,11 @@ El archivo `config.json` permite modificar el comportamiento de la herramienta s
     "server": {
         "new_name": "RAIDED BY MS-NUKER",
         "new_icon": "",
-        "new_description": "discord.gg/e8BrVmVTRu"
+        "new_description": "discord.gg/w7TvFudgxm"
     },
     "bot_presence": {
         "type": "playing",
-        "text": "discord.gg/e8BrVmVTRu"
+        "text": "discord.gg/w7TvFudgxm"
     }
 }
 ```
@@ -508,7 +508,7 @@ sudo apt install python3-pip
 </p>
 
 <p align="center">
-  <a href="https://discord.gg/e8BrVmVTRu">Discord</a> &mdash;
+  <a href="https://discord.gg/w7TvFudgxm">Discord</a> &mdash;
   <a href="https://github.com/M-Societyy">GitHub</a> &mdash;
   <a href="https://www.youtube.com/@m-societyoff">YouTube</a>
 </p>
