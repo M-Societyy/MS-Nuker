@@ -170,12 +170,25 @@ _ART = [
 ]
 _SHADES = [R5, R5, R4, R4, R3, R3, R2, R2, R1, R1, R0, R1, R1, R2, R2, R3, R3, R4, R4, R5]
 
+async def _print_banner_async(bot_n="", srv_n="", members=0, animated=False):
+    print()
+    for i, line in enumerate(_ART):
+        c = _SHADES[i % len(_SHADES)]
+        print(f"  {c}{line}{RS}")
+        if animated: await asyncio.sleep(.02)
+    print()
+    print(f"  {R1}{B}MS-NUKER{RS} {DIM}v1.0.0{RS}  {R3}│{RS}  {GRY}M-Society Dev Team{RS}  {R3}│{RS}  {GRY}c1q_ & Cyk{RS}")
+    print()
+    if bot_n:
+        info = f"  {D2}┌─{RS} {GRY}bot{RS} {r1(bot_n)}  {D3}│{RS}  {GRY}server{RS} {wht(srv_n or '-')}  {D3}│{RS}  {GRY}members{RS} {r1(str(members))} {D2}─┐{RS}"
+        print(info)
+        print()
+
 def _print_banner(bot_n="", srv_n="", members=0, animated=False):
     print()
     for i, line in enumerate(_ART):
         c = _SHADES[i % len(_SHADES)]
         print(f"  {c}{line}{RS}")
-        if animated: time.sleep(.02)
     print()
     print(f"  {R1}{B}MS-NUKER{RS} {DIM}v1.0.0{RS}  {R3}│{RS}  {GRY}M-Society Dev Team{RS}  {R3}│{RS}  {GRY}c1q_ & Cyk{RS}")
     print()
@@ -1353,18 +1366,41 @@ intents = discord.Intents.all()
 bot     = commands.Bot(command_prefix='!', intents=intents)
 
 @bot.event
+async def on_connect():
+    print(f"  {R1}[+]{RS} {WHT}Conexion establecida, cargando...{RS}")
+    sys.stdout.flush()
+
+@bot.event
 async def on_ready():
-    _clr()
-    guild = bot.get_guild(int(server_id))
-    _print_banner(bot.user.name, guild.name if guild else "not found",
-                  guild.member_count if guild else 0, animated=True)
-    fx_spin("authenticating", .7)
-    if not guild: log_err("bot not in this server"); return
-    log_ok(f"ready  {guild.name}  ({guild.member_count} members)")
+    global server_id, bot_token
     try:
-        pt = getattr(ActivityType, BOT_PRESENCE["type"].lower(), ActivityType.playing)
-        await bot.change_presence(activity=Activity(type=pt, name=BOT_PRESENCE["text"]))
-    except: pass
+        print(f"  {R2}[*]{RS} {WHT}on_ready disparado como: {bot.user} | servidores: {len(bot.guilds)}{RS}")
+        sys.stdout.flush()
+        guild = bot.get_guild(int(server_id))
+        if not guild:
+            print(f"\n  {R3}[x]{RS} {WHT}Bot no encontrado en servidor ID: {server_id}{RS}")
+            if bot.guilds:
+                print(f"  {GRY}Servidores disponibles:{RS}")
+                for g in bot.guilds:
+                    print(f"    {DIM}· {g.name}  ({g.id}){RS}")
+            else:
+                print(f"  {R3}[!]{RS} {WHT}El bot no esta en NINGUN servidor.{RS}")
+                print(f"  {GRY}Invita el bot al servidor con permisos de administrador.{RS}")
+            print(f"\n  {GRY}Tambien verifica que 'SERVER MEMBERS INTENT' y 'MESSAGE CONTENT INTENT' esten activados en el portal de Discord Developer.{RS}\n")
+            input(f"  {D2}[ enter para salir ]{RS}")
+            await bot.close()
+            return
+        await _print_banner_async(bot.user.name, guild.name, guild.member_count, animated=True)
+        fx_spin("authenticating", .7)
+        log_ok(f"ready  {guild.name}  ({guild.member_count} members)")
+        try:
+            pt = getattr(ActivityType, BOT_PRESENCE["type"].lower(), ActivityType.playing)
+            await bot.change_presence(activity=Activity(type=pt, name=BOT_PRESENCE["text"]))
+        except: pass
+    except Exception as _re:
+        print(f"  {R3}[x]{RS} {WHT}Error en on_ready: {_re}{RS}")
+        sys.stdout.flush()
+        return
 
     acts = _actions(server_id, bot.user.id)
     page = 1
@@ -1428,5 +1464,13 @@ async def on_message(message: discord.Message):
     await bot.process_commands(message)
 
 if __name__ == "__main__":
-
-    bot.run(bot_token, log_handler=None)
+    print(f"\n  {R2}[*]{RS} {WHT}Conectando con Discord...{RS} {DIM}(puede tardar unos segundos){RS}\n")
+    sys.stdout.flush()
+    try:
+        bot.run(bot_token, log_handler=None)
+    except discord.LoginFailure:
+        print(f"\n  {R3}[x]{RS} {WHT}Token invalido o expirado. Borra .ms_session.json y vuelve a ejecutar.{RS}\n")
+        sys.exit(1)
+    except Exception as _e:
+        print(f"\n  {R3}[x]{RS} {WHT}Error al conectar: {_e}{RS}\n")
+        sys.exit(1)
